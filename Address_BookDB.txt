@@ -1,0 +1,156 @@
+MariaDB [payroll_service]> create database AddressBook_ServiceDB;
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [payroll_service]> use addressbook_servicedb;
+Database changed
+MariaDB [addressbook_servicedb]> create table addressbook(firstname varchar(20),lastname varchar(20),address varchar(50),city varchar(20),state varchar(30),zip varchar(6),phone varchar(12),email varchar(50));
+Query OK, 0 rows affected (0.491 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Nayan','Shah','Meera Nagar','Shahada','Maharashtra','425409','9988776655','nayan@gmail.com');
+Query OK, 1 row affected (0.083 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Gagan','Shahu','Shanti Nagar','Shahada','Maharashtra','425409','8899887661','gagan@gmail.com');
+Query OK, 1 row affected (0.081 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Raman','Rathi','Shantivan Nagar','Shahada','Maharashtra','425409','9098765432','raman@gmail.com');
+Query OK, 1 row affected (0.062 sec)
+
+MariaDB [addressbook_servicedb]> select * from addressbook;
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com |
+| Gagan     | Shahu    | Shanti Nagar    | Shahada | Maharashtra | 425409 | 8899887661 | gagan@gmail.com |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> update addressbook set address='Ganesh Nagar',phone='1122112211' where firstname='Gagan';
+Query OK, 1 row affected (0.076 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [addressbook_servicedb]> select * from addressbook;
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com |
+| Gagan     | Shahu    | Ganesh Nagar    | Shahada | Maharashtra | 425409 | 1122112211 | gagan@gmail.com |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> delete from addressbook where firstname='Gagan';
+Query OK, 1 row affected (0.089 sec)
+
+MariaDB [addressbook_servicedb]> select * from addressbook;
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> select * from addressbook where city='Shahada';
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> select * from addressbook where state='Maharashtra';
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> select count(state) from addressbook where state='Maharashtra';
++--------------+
+| count(state) |
++--------------+
+|            2 |
++--------------+
+1 row in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> select count(city) from addressbook where city='Shahada';
++-------------+
+| count(city) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> select firstname from addressbook where city='Shahada' order by firstname;
++-----------+
+| firstname |
++-----------+
+| Nayan     |
+| Raman     |
++-----------+
+2 rows in set (0.022 sec)
+
+MariaDB [addressbook_servicedb]> alter table addressbook add column bookname varchar(20), add column booktype varchar(20);
+Query OK, 0 rows affected (0.115 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [addressbook_servicedb]> select * from addressbook where city='Shahada';
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+----------+----------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           | bookname | booktype |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+----------+----------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com | NULL     | NULL     |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com | NULL     | NULL     |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+----------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> update addressbook set bookname='MyBook1', booktype='Family';
+Query OK, 2 rows affected (0.068 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [addressbook_servicedb]> select * from addressbook where city='Shahada';
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+----------+----------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email           | bookname | booktype |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+----------+----------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com | MyBook1  | Family   |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com | MyBook1  | Family   |
++-----------+----------+-----------------+---------+-------------+--------+------------+-----------------+----------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Bhanu','Shah','Meera Nagar','Shahada','Maharashtra','425409','3488776655','bhanu@gmail.com','MyBook2','Friends');
+Query OK, 1 row affected (0.106 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Bhavesh','Shahu','Geet Nagar','Shahada','Maharashtra','425409','7865678999','bhavesh@gmail.com','MyBook3','Friends');
+Query OK, 1 row affected (0.101 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Ravish','Kumar','Geet Nagar','Shahada','Maharashtra','425409','7456678999','ravish@gmail.com','MyBook3','Profession');
+Query OK, 1 row affected (0.073 sec)
+
+MariaDB [addressbook_servicedb]> insert into addressbook values('Satish','Kumar','Preet Nagar','Shahada','Maharashtra','425409','9996678999','satish@gmail.com','MyBook1','Profession');
+Query OK, 1 row affected (0.093 sec)
+
+MariaDB [addressbook_servicedb]> select * from addressbook;
++-----------+----------+-----------------+---------+-------------+--------+------------+-------------------+----------+------------+
+| firstname | lastname | address         | city    | state       | zip    | phone      | email             | bookname | booktype   |
++-----------+----------+-----------------+---------+-------------+--------+------------+-------------------+----------+------------+
+| Nayan     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 9988776655 | nayan@gmail.com   | MyBook1  | Family     |
+| Raman     | Rathi    | Shantivan Nagar | Shahada | Maharashtra | 425409 | 9098765432 | raman@gmail.com   | MyBook1  | Family     |
+| Bhanu     | Shah     | Meera Nagar     | Shahada | Maharashtra | 425409 | 3488776655 | bhanu@gmail.com   | MyBook2  | Friends    |
+| Bhavesh   | Shahu    | Geet Nagar      | Shahada | Maharashtra | 425409 | 7865678999 | bhavesh@gmail.com | MyBook3  | Friends    |
+| Ravish    | Kumar    | Geet Nagar      | Shahada | Maharashtra | 425409 | 7456678999 | ravish@gmail.com  | MyBook3  | Profession |
+| Satish    | Kumar    | Preet Nagar     | Shahada | Maharashtra | 425409 | 9996678999 | satish@gmail.com  | MyBook1  | Profession |
++-----------+----------+-----------------+---------+-------------+--------+------------+-------------------+----------+------------+
+6 rows in set (0.001 sec)
+
+MariaDB [addressbook_servicedb]> select booktype,count(*) from addressbook group by booktype;
++------------+----------+
+| booktype   | count(*) |
++------------+----------+
+| Family     |        2 |
+| Friends    |        2 |
+| Profession |        2 |
++------------+----------+
+3 rows in set (0.036 sec)
